@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CreateBookingController;
+use App\Http\Controllers\OccupancyRateController;
 use App\Http\Controllers\UpdateBookingController;
 use App\Http\Middleware\LogRequest;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('daily-occupancy-rates/{date}', [OccupancyRateController::class, 'daily']);
+Route::get('monthly-occupancy-rates/{month}', [OccupancyRateController::class, 'monthly']);
 
 Route::post('booking', CreateBookingController::class)
     ->middleware(LogRequest::class)
