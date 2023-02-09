@@ -16,14 +16,6 @@ class HasStartsAtEndsAtTraitTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->date = [2023, 02, 18];
-        $this->room = Room::factory()->create();
-    }
-
     public function test_result_only_includes_selected_rooms()
     {
         $rooms = Room::factory(5)
@@ -45,7 +37,7 @@ class HasStartsAtEndsAtTraitTest extends TestCase
     public function test_on_day_query_returns_any_records_which_start_and_end_dates_include_selected_date(array $dates, bool $inResult, Day $onDay)
     {
         $booking = (new OccupancyGenerator(Booking::class))
-            ->room($this->room)
+            ->room(Room::factory()->create())
             ->from($dates['from'])
             ->to($dates['to'])
             ->save();
@@ -63,7 +55,7 @@ class HasStartsAtEndsAtTraitTest extends TestCase
     public function test_in_month_query_returns_any_records_which_duration_at_least_partly_covers_the_selected_month(array $dates, bool $inResult, Month $inMonth)
     {
         $booking = (new OccupancyGenerator(Booking::class))
-            ->room($this->room)
+            ->room(Room::factory()->create())
             ->from($dates['from'])
             ->to($dates['to'])
             ->save();
@@ -77,54 +69,54 @@ class HasStartsAtEndsAtTraitTest extends TestCase
 
     public function monthlyBookingProvider(): Generator
     {
-        $date = [2023, 02, 18];
-        $month = new Month(...$date);
+        $date = Carbon::now();
+        $month = new Month($date->year, $date->month);
 
         yield from [
             'start and end date are within month' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date),
-                    'to' => Carbon::create(...$date),
+                    'from' => $date,
+                    'to' => $date,
                 ],
                 'included_in_result' => true,
                 'in_month' => $month,
             ],
             'start date is before month but end date is in month' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->subMonth(),
-                    'to' => Carbon::create(...$date),
+                    'from' => $date->copy()->subMonth(),
+                    'to' => $date,
                 ],
                 'included_in_result' => true,
                 'in_month' => $month,
             ],
             'end date is after month but start date is in month' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date),
-                    'to' => Carbon::create(...$date)->addMonth(),
+                    'from' => $date,
+                    'to' => $date->copy()->addMonth(),
                 ],
                 'included_in_result' => true,
                 'in_month' => $month,
             ],
             'start date is before month and end date is after month' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->subMonth(),
-                    'to' => Carbon::create(...$date)->addMonth(),
+                    'from' => $date->copy()->subMonth(),
+                    'to' => $date->copy()->addMonth(),
                 ],
                 'included_in_result' => true,
                 'in_month' => $month,
             ],
             'start and end date are before month' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->subMonths(2),
-                    'to' => Carbon::create(...$date)->subMonth(),
+                    'from' => $date->copy()->subMonths(2),
+                    'to' => $date->copy()->subMonth(),
                 ],
                 'included_in_result' => false,
                 'in_month' => $month,
             ],
             'start and end date are after month' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->addMonth(),
-                    'to' => Carbon::create(...$date)->addMonths(2),
+                    'from' => $date->copy()->addMonth(),
+                    'to' => $date->copy()->addMonths(2),
                 ],
                 'included_in_result' => false,
                 'in_month' => $month,
@@ -134,54 +126,54 @@ class HasStartsAtEndsAtTraitTest extends TestCase
 
     public function dailyBookingProvider(): Generator
     {
-        $date = [2023, 02, 18];
-        $day = new Day(...$date);
+        $date = Carbon::now();
+        $day = Day::fromDate($date);
 
         yield from [
             'on selected date' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date),
-                    'to' => Carbon::create(...$date),
+                    'from' => $date,
+                    'to' => $date,
                 ],
                 'included_in_result' => true,
                 'on_day' => $day,
             ],
             'starts before selected date' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->subDay(),
-                    'to' => Carbon::create(...$date),
+                    'from' => $date->copy()->subDay(),
+                    'to' => $date,
                 ],
                 'included_in_result' => true,
                 'on_day' => $day,
             ],
             'ends after selected date' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date),
-                    'to' => Carbon::create(...$date)->addDay(),
+                    'from' => $date,
+                    'to' => $date->copy()->addDay(),
                 ],
                 'included_in_result' => true,
                 'on_day' => $day,
             ],
             'starts before and ends after selected date' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->subDay(),
-                    'to' => Carbon::create(...$date)->addDay(),
+                    'from' => $date->copy()->subDay(),
+                    'to' => $date->copy()->addDay(),
                 ],
                 'included_in_result' => true,
                 'on_day' => $day,
             ],
             'starts and ends before selected date' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->subDays(2),
-                    'to' => Carbon::create(...$date)->subDay(),
+                    'from' => $date->copy()->subDays(2),
+                    'to' => $date->copy()->subDay(),
                 ],
                 'included_in_result' => false,
                 'on_day' => $day,
             ],
             'starts and ends after selected date' => [
                 'dates' => [
-                    'from' => Carbon::create(...$date)->addDay(),
-                    'to' => Carbon::create(...$date)->addDays(2),
+                    'from' => $date->copy()->addDay(),
+                    'to' => $date->copy()->addDays(2),
                 ],
                 'included_in_result' => false,
                 'on_day' => $day,

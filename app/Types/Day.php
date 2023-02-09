@@ -20,4 +20,9 @@ class Day implements Period
     {
         return $this->date->toDateString();
     }
+
+    public static function fromDate(Carbon $date): Day
+    {
+        return new self($date->year, $date->month, $date->day);
+    }
 }

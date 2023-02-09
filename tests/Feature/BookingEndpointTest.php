@@ -72,20 +72,22 @@ class BookingEndpointTest extends TestCase
 
     public function changeProvider(): Generator
     {
+        $date = Carbon::now();
+
         yield from [
             'changed room' => [
-                'from' => Carbon::now()->toDateString(),
-                'to' => Carbon::now()->addDay()->toDateString(),
+                'from' => $date->copy()->toDateString(),
+                'to' => $date->copy()->addDay()->toDateString(),
                 'change_room' => true,
             ],
             'changed from' => [
-                'from' => Carbon::now()->subDay()->toDateString(),
-                'to' => Carbon::now()->addDay()->toDateString(),
+                'from' => $date->copy()->subDay()->toDateString(),
+                'to' => $date->copy()->addDay()->toDateString(),
                 'change_room' => true,
             ],
             'changed to' => [
-                'from' => Carbon::now()->toDateString(),
-                'to' => Carbon::now()->addDays(3)->toDateString(),
+                'from' => $date->copy()->toDateString(),
+                'to' => $date->copy()->addDays(3)->toDateString(),
                 'change_room' => true,
             ],
         ];

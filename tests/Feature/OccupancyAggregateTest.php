@@ -26,7 +26,7 @@ class OccupancyAggregateTest extends TestCase
 
         $expected = $rooms->take($included);
 
-        $aggregate = (new OccupancyAggregator($expected, new Day(2023, 02, 18)))->aggregate();
+        $aggregate = (new OccupancyAggregator($expected, Day::fromDate(Carbon::now())))->aggregate();
 
         $this->assertEquals(
             $expected->pluck('id')->toArray(),
@@ -43,7 +43,7 @@ class OccupancyAggregateTest extends TestCase
 
         $expected = $rooms->take($included);
 
-        $aggregate = (new OccupancyAggregator($expected, new Day(2023, 02, 18)))->aggregate();
+        $aggregate = (new OccupancyAggregator($expected, Day::fromDate(Carbon::now())))->aggregate();
 
         $this->assertEquals(
             $expected->sum('capacity'),
@@ -55,15 +55,15 @@ class OccupancyAggregateTest extends TestCase
      * @dataProvider occupancyProvider
      * */
     public function test_aggregate_shows_expected_number_of_bookings_blocks_and_rate(int $capacity, int $bookings, int $blocks, float $occupancyRate) {
-        $observedDay = [2023, 2, 15];
+        $observedDay = Carbon::now();
 
         $observedRoom = Room::factory()->create(['capacity' => $capacity]);
 
         for ($i = 0; $i < $bookings; $i++) {
             (new OccupancyGenerator(Booking::class))
                 ->room($observedRoom)
-                ->from(Carbon::create(...$observedDay))
-                ->to(Carbon::create(...$observedDay)->addDay())
+                ->from($observedDay)
+                ->to($observedDay->copy()->addDay())
                 ->get()
                 ->save();
         }
@@ -71,13 +71,13 @@ class OccupancyAggregateTest extends TestCase
         for ($i = 0; $i < $blocks; $i++) {
             (new OccupancyGenerator(Block::class))
                 ->room($observedRoom)
-                ->from(Carbon::create(...$observedDay))
-                ->to(Carbon::create(...$observedDay)->addDay())
+                ->from($observedDay)
+                ->to($observedDay->copy()->addDay())
                 ->get()
                 ->save();
         }
 
-        $aggregate = (new OccupancyAggregator(collect([$observedRoom]), new Day(...$observedDay)))->aggregate();
+        $aggregate = (new OccupancyAggregator(collect([$observedRoom]), Day::fromDate($observedDay)))->aggregate();
 
         $this->assertSame(
             [
