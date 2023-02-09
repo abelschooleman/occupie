@@ -5,15 +5,16 @@ namespace App\Generators;
 use App\Exceptions\CouldNotStoreOccupancy;
 use App\Models\Block;
 use App\Models\Booking;
+use App\Models\Occupancy;
 use App\Models\Room;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class OccupancyGenerator
 {
-    private Booking|Block $occupancy;
+    private Occupancy $occupancy;
 
-    public function __construct(Booking | Block | string $model) {
+    public function __construct(Occupancy | string $model) {
         is_string($model) ?
             $this->occupancy = new $model() :
             $this->occupancy = $model;
@@ -24,7 +25,7 @@ class OccupancyGenerator
         return $this->apply('starts_at', $date->toDateString());
     }
 
-    public function get(): Booking|Block
+    public function get(): Occupancy
     {
         return $this->occupancy;
     }
@@ -37,7 +38,7 @@ class OccupancyGenerator
     /**
      * @throws CouldNotStoreOccupancy
      */
-    public function save(): Booking|Block
+    public function save(): Occupancy
     {
         if (!$this->occupancy->save()) {
             throw CouldNotStoreOccupancy::forUnexpectedReasons($this->occupancy);
