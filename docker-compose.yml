@@ -1,0 +1,80 @@
+version: '3'
+services:
+
+  #PHP Service
+  occupie:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bitnami/php-fpm
+    container_name: occupie-php
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - occupie
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: occupie
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    expose: [80]
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - occupie
+
+  #MySQL Service
+  mysql:
+    image: mysql
+    container_name: occupie-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: occupie
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - occupie
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./mysql-files:/var/lib/mysql-files
+
+  mail:
+      image: mailhog/mailhog
+      container_name: occupie-mail
+      restart: unless-stopped
+      tty: true
+      ports:
+        - "1025:1025"
+        - "8025:8025"
+      networks:
+        - occupie
+
+#Docker Networks
+networks:
+  occupie:
+    driver: bridge
+
+#Docker Volumes
+volumes:
+  dbdata:
+    driver: local
