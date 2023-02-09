@@ -1,0 +1,198 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2023-02-09T21:17:19.616Z",
+    "__export_source": "insomnia.desktop.app:v2020.5.2",
+    "resources": [
+        {
+            "_id": "req_3fb0a425fbf64520bc0305e3321e1a8d",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675977201235,
+            "created": 1675977188848,
+            "url": "http://occupie.test/api/monthly-occupancy-rates/2023-02",
+            "name": "Get month;y occupancy",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1675977188848,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "parentId": null,
+            "modified": 1675861318725,
+            "created": 1675861318725,
+            "name": "Bookinglayer",
+            "description": "",
+            "scope": null,
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_956a465571794f85ba9f04c04d62c296",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675977124530,
+            "created": 1675977091923,
+            "url": "http://occupie.test/api/daily-occupancy-rates/2023-02-09",
+            "name": "Get daily occupancy",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1675977091923,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_eb76633d32344a6da6cd6c4ab984ed83",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675977077511,
+            "created": 1675977068511,
+            "url": "http://occupie.test/api/booking/11",
+            "name": "Update booking",
+            "description": "",
+            "method": "PUT",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"roomId\": 1,\n\t\"from\": \"2023-03-22\",\n\t\"to\": \"2023-03-25\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_0d709500c0024f70b26f342b1b30af71"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1675977068511,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_f692ecb9a8d4414ebdc84bd5ec2325d2",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675977053529,
+            "created": 1675861337469,
+            "url": "http://occupie.test/api/booking/11",
+            "name": "Create booking",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"roomId\": 1,\n\t\"from\": \"2023-03-22\",\n\t\"to\": \"2023-03-25\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "id": "pair_923eba9f372a48c59bc0345cd69f42e3"
+                },
+                {
+                    "name": "Accept",
+                    "value": "application/json",
+                    "description": "",
+                    "id": "pair_a569b81a18c94fb19f468f274ad92fe9"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1675861337469,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "env_82983952bf3885c5883b73a82a698f54d1b5f442",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675861318871,
+            "created": 1675861318871,
+            "name": "Base Environment",
+            "data": {},
+            "dataPropertyOrder": null,
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1675861318871,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_82983952bf3885c5883b73a82a698f54d1b5f442",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675976652609,
+            "created": 1675861318872,
+            "name": "Default Jar",
+            "cookies": [
+                {
+                    "key": "XSRF-TOKEN",
+                    "value": "eyJpdiI6IlVBVjkrcHU0b05pUi83RE5VR2cyMWc9PSIsInZhbHVlIjoiQzJpdjlmSWJ4NHNQZ3M0aTIrU1k4RlpNV2FjRnN6QklLSGdjMVRiMEFRb0ZWMEN2SmsxUTB6Ylo5c080cGNBc0JNcWVjNTNtYnAzV1RIMHVtd0RHNTNCVG1od2JvVEVvZTluRnB0T2FSTTZOcWduSkdENkFUZlRGVHMzTE5JamoiLCJtYWMiOiI2MTg3NjRhOTE2MWY2Yzc2OTQ3YjExZWU0NmVjMmM4MDA5MjgwYzgzMTIxNTIyZTE2ZDBjNmU2NmI1YTY5N2NmIiwidGFnIjoiIn0%3D",
+                    "expires": "2023-02-09T23:04:12.000Z",
+                    "maxAge": 7200,
+                    "domain": "occupie.test",
+                    "path": "/",
+                    "extensions": [
+                        "samesite=lax"
+                    ],
+                    "hostOnly": true,
+                    "creation": "2023-02-09T20:44:19.335Z",
+                    "lastAccessed": "2023-02-09T21:04:12.609Z",
+                    "id": "7214455625220642"
+                },
+                {
+                    "key": "laravel_session",
+                    "value": "eyJpdiI6IjBxdU9iaXh4OUVRSkk4VFdXVmNKQWc9PSIsInZhbHVlIjoidHJISG9GalFCL0VCLzVCWXF1YmtCNTBHZVFvbGdWSmJtWi9FYlBHVVFEM2Y0RW54RXRRRkxjMGM2WFRUUTNYTXJJQmxvV0lETTE3NFdSVFRwNlpKd3JhdWQxajhqTmt0SHFoUkQ0SFVqZkJ3RDBCYkg4ZU9Ua3pKTktJc1ZoL2wiLCJtYWMiOiI5MTA5NWZlOGMzZDQwMjYwZmE2MmU5MjA3ZjFlZTI3ZDAxNmQ5N2UzMjliZDJjMjRkMmRkZTIxNDc5ZjkyNDUxIiwidGFnIjoiIn0%3D",
+                    "expires": "2023-02-09T23:04:12.000Z",
+                    "maxAge": 7200,
+                    "domain": "occupie.test",
+                    "path": "/",
+                    "httpOnly": true,
+                    "extensions": [
+                        "samesite=lax"
+                    ],
+                    "hostOnly": true,
+                    "creation": "2023-02-09T20:44:19.335Z",
+                    "lastAccessed": "2023-02-09T21:04:12.609Z",
+                    "id": "867986575605272"
+                }
+            ],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_8760dc3bb9984e86b17355dbc52c10e4",
+            "parentId": "wrk_e049e730c24d4c7c9280bf248136d4c0",
+            "modified": 1675861318728,
+            "created": 1675861318728,
+            "fileName": "Bookinglayer",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}
