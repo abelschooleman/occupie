@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Aggregates\OccupancyAggregator;
 use App\Exceptions\CouldNotFindOneOrMoreRequestedRooms;
-use App\Models\Room;
 use App\Repositories\RoomRepository;
 use App\Types\Day;
 use App\Types\Month;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Collection;
 
 class OccupancyRateController extends Controller
 {
