@@ -21,7 +21,7 @@ class OccupancyRateController extends Controller
     public function daily(Request $request, RoomRepository $repository): JsonResponse|Response
     {
         try {
-            $day = new Day(...explode('-', $request->date));
+            $day = Day::fromString($request->date);
 
             $rooms = $repository->get($request->query('room_ids', []));
 
@@ -45,7 +45,7 @@ class OccupancyRateController extends Controller
     public function monthly(Request $request, RoomRepository $repository): JsonResponse|Response
     {
         try {
-            $month = new Month(...explode('-', $request->month));
+            $month = new Month($request->year, $request->month);
 
             $rooms = $repository->get($request->query('room_ids', []));
 

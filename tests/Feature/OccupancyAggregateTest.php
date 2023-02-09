@@ -26,7 +26,7 @@ class OccupancyAggregateTest extends TestCase
 
         $expected = $rooms->take($included);
 
-        $aggregate = (new OccupancyAggregator($expected, Day::fromDate(Carbon::now())))->aggregate();
+        $aggregate = (new OccupancyAggregator($expected, new Day(Carbon::now())))->aggregate();
 
         $this->assertEquals(
             $expected->pluck('id')->toArray(),
@@ -43,7 +43,7 @@ class OccupancyAggregateTest extends TestCase
 
         $expected = $rooms->take($included);
 
-        $aggregate = (new OccupancyAggregator($expected, Day::fromDate(Carbon::now())))->aggregate();
+        $aggregate = (new OccupancyAggregator($expected, new Day(Carbon::now())))->aggregate();
 
         $this->assertEquals(
             $expected->sum('capacity'),
@@ -77,7 +77,7 @@ class OccupancyAggregateTest extends TestCase
                 ->save();
         }
 
-        $aggregate = (new OccupancyAggregator(collect([$observedRoom]), Day::fromDate($observedDay)))->aggregate();
+        $aggregate = (new OccupancyAggregator(collect([$observedRoom]), new Day($observedDay)))->aggregate();
 
         $this->assertSame(
             [

@@ -25,7 +25,7 @@ class HasStartsAtEndsAtTraitTest extends TestCase
         $included = $rooms->take(3);
 
         $bookings = Booking::ofRooms($included)
-            ->onDate(new Day(Carbon::now()->year, Carbon::now()->month, Carbon::now()->day))
+            ->onDate(new Day(Carbon::now()))
             ->get();
 
         $this->assertEquals($included->pluck('id'), $bookings->pluck('room_id'));
@@ -127,7 +127,7 @@ class HasStartsAtEndsAtTraitTest extends TestCase
     public function dailyBookingProvider(): Generator
     {
         $date = Carbon::now();
-        $day = Day::fromDate($date);
+        $day = new Day($date);
 
         yield from [
             'on selected date' => [

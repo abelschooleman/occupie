@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('daily-occupancy-rates/{date}', [OccupancyRateController::class, 'daily']);
-Route::get('monthly-occupancy-rates/{month}', [OccupancyRateController::class, 'monthly']);
+Route::get('monthly-occupancy-rates/{year}-{month}', [OccupancyRateController::class, 'monthly']);
 
 Route::post('booking', CreateBookingController::class)
     ->middleware(LogRequest::class)

@@ -35,4 +35,9 @@ class Month implements Period
     {
         return Carbon::create($this->year, $this->month);
     }
+
+    public static function fromString(string $date): Month
+    {
+        return new self(...explode('-', $date));
+    }
 }
