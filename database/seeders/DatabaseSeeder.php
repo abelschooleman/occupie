@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         Room::factory(5)
-            ->has(Booking::factory(10))
-            ->has(Block::factory(3))
+            ->has(Booking::factory(2))
+            ->has(Block::factory(1))
             ->create();
     }
 }
