@@ -7,7 +7,7 @@ use App\Types\Month;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
-trait HasStartsAtEndsAt
+trait HasOccupancy
 {
     public function scopeOfRooms(Builder $query, Collection $rooms): Builder
     {

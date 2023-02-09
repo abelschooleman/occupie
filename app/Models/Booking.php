@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Traits\HasStartsAtEndsAt;
+use App\Traits\HasOccupancy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Booking extends Model
+class Booking extends Model implements Occupancy
 {
-    use HasFactory, HasStartsAtEndsAt;
+    use HasFactory, HasOccupancy;
 
     protected $visible = [
         'ends_at',
