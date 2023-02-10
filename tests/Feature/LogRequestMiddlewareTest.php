@@ -37,5 +37,6 @@ class LogRequestMiddlewareTest extends TestCase
     function test_routes_have_middleware()
     {
         $this->assertRouteUsesMiddleware('booking.create', [LogRequest::class]);
+        $this->assertRouteUsesMiddleware('booking.update', [LogRequest::class]);
     }
 }
