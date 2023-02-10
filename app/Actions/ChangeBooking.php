@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Generators\OccupancyGenerator;
 use App\Exceptions\CouldNotStoreOccupancy;
 use App\Models\Booking;
+use App\Models\Occupancy;
 use App\Models\Room;
 use Illuminate\Support\Carbon;
 
@@ -20,9 +21,9 @@ class ChangeBooking
     /**
      * @throws CouldNotStoreOccupancy
      */
-    public function submit(): Booking
+    public function submit(): Occupancy
     {
-        return (new OccupancyGenerator($this->booking))
+        return OccupancyGenerator::for($this->booking)
             ->room($this->room)
             ->from($this->from)
             ->to($this->to)

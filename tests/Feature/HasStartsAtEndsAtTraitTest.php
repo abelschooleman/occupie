@@ -36,7 +36,7 @@ class HasStartsAtEndsAtTraitTest extends TestCase
      */
     public function test_on_day_query_returns_any_records_which_start_and_end_dates_include_selected_date(array $dates, bool $inResult, Day $onDay)
     {
-        $booking = (new OccupancyGenerator(Booking::class))
+        $booking = OccupancyGenerator::for(Booking::class)
             ->room(Room::factory()->create())
             ->from($dates['from'])
             ->to($dates['to'])
@@ -54,7 +54,7 @@ class HasStartsAtEndsAtTraitTest extends TestCase
      */
     public function test_in_month_query_returns_any_records_which_duration_at_least_partly_covers_the_selected_month(array $dates, bool $inResult, Month $inMonth)
     {
-        $booking = (new OccupancyGenerator(Booking::class))
+        $booking = OccupancyGenerator::for(Booking::class)
             ->room(Room::factory()->create())
             ->from($dates['from'])
             ->to($dates['to'])

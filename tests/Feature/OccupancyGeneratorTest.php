@@ -19,7 +19,7 @@ class OccupancyGeneratorTest extends TestCase
 
         $this->model = Booking::class;
 
-        $this->builder = new OccupancyGenerator($this->model);
+        $this->builder = OccupancyGenerator::for($this->model);
     }
 
     function test_instantiating_builder_initiates_instance_of_given_model () {

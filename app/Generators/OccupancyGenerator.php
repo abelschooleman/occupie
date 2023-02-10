@@ -20,6 +20,11 @@ class OccupancyGenerator
             $this->occupancy = $model;
     }
 
+    public static function for(Occupancy | string $model): OccupancyGenerator
+    {
+        return new self($model);
+    }
+
     public function from(Carbon $date): OccupancyGenerator
     {
         return $this->apply('starts_at', $date->toDateString());

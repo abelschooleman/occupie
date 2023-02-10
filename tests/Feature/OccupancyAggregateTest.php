@@ -60,20 +60,18 @@ class OccupancyAggregateTest extends TestCase
         $observedRoom = Room::factory()->create(['capacity' => $capacity]);
 
         for ($i = 0; $i < $bookings; $i++) {
-            (new OccupancyGenerator(Booking::class))
+            OccupancyGenerator::for(Booking::class)
                 ->room($observedRoom)
                 ->from($observedDay)
                 ->to($observedDay->copy()->addDay())
-                ->get()
                 ->save();
         }
 
         for ($i = 0; $i < $blocks; $i++) {
-            (new OccupancyGenerator(Block::class))
+            OccupancyGenerator::for(Block::class)
                 ->room($observedRoom)
                 ->from($observedDay)
                 ->to($observedDay->copy()->addDay())
-                ->get()
                 ->save();
         }
 
