@@ -4,6 +4,7 @@ namespace App\Aggregates;
 
 use App\Models\Block;
 use App\Models\Booking;
+use App\Models\Occupancy;
 use App\Types\Day;
 use App\Types\Month;
 use App\Types\Period;
@@ -29,8 +30,8 @@ class OccupancyAggregator
 
     public function aggregate(): array
     {
-        $bookings = $this->fetchOccupancy(Booking::class);
-        $blocks = $this->fetchOccupancy(Block::class);
+        $bookings = $this->fetchOccupancy(new Booking());
+        $blocks = $this->fetchOccupancy(new Block());
 
         return [
             'bookings' => $bookings,
@@ -42,7 +43,7 @@ class OccupancyAggregator
         ];
     }
 
-    private function fetchOccupancy(string $model): int
+    private function fetchOccupancy(Occupancy $model): int
     {
         return $model::ofRooms($this->rooms)
             ->when(
