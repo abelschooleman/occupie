@@ -16,13 +16,13 @@ class OccupancyAggregator
     private int $capacity;
 
     public function __construct(
-        private readonly Collection $rooms,
-        private readonly Period $period,
+        private readonly Collection $forRooms,
+        private readonly Period $inPeriod,
     ) {
-        $capacity = $this->rooms->sum('capacity');
+        $capacity = $this->forRooms->sum('capacity');
 
-        if ($period instanceof Month) {
-            $capacity = $capacity * $this->period->days();
+        if ($this->inPeriod instanceof Month) {
+            $capacity = $capacity * $this->inPeriod->days();
         }
 
         $this->capacity = $capacity;
@@ -38,18 +38,18 @@ class OccupancyAggregator
             'blocks' => $blocks,
             'capacity' => $this->capacity,
             'occupancy_rate' => (float) number_format($this->rate($bookings, $blocks), 2),
-            'period' => $this->period->toString(),
-            'rooms' => $this->rooms->toArray(),
+            'period' => $this->inPeriod->toString(),
+            'rooms' => $this->forRooms->toArray(),
         ];
     }
 
     private function fetchOccupancy(Occupancy $model): int
     {
-        return $model::ofRooms($this->rooms)
+        return $model::ofRooms($this->forRooms)
             ->when(
-                $this->period instanceof Day,
-                fn ($q) => $q->onDate($this->period),
-                fn ($q) => $q->inMonth($this->period)
+                $this->inPeriod instanceof Day,
+                fn ($q) => $q->onDate($this->inPeriod),
+                fn ($q) => $q->inMonth($this->inPeriod)
             )->count();
     }
 
