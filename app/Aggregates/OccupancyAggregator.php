@@ -5,7 +5,6 @@ namespace App\Aggregates;
 use App\Models\Block;
 use App\Models\Booking;
 use App\Models\Occupancy;
-use App\Types\Day;
 use App\Types\Month;
 use App\Types\Period;
 use DivisionByZeroError;
@@ -45,12 +44,16 @@ class OccupancyAggregator
 
     private function fetchOccupancy(Occupancy $model): int
     {
+        if ($this->inPeriod instanceof Month) {
+            return $model::ofRooms($this->forRooms)
+                ->inMonth($this->inPeriod)
+                ->pluck('span')
+                ->sum();
+        }
+
         return $model::ofRooms($this->forRooms)
-            ->when(
-                $this->inPeriod instanceof Day,
-                fn ($q) => $q->onDate($this->inPeriod),
-                fn ($q) => $q->inMonth($this->inPeriod)
-            )->count();
+            ->onDate($this->inPeriod)
+            ->count();
     }
 
     private function rate(int $bookings, int $blocks): float

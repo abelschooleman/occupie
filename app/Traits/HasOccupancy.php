@@ -23,6 +23,9 @@ trait HasOccupancy
     public function scopeInMonth(Builder $query, Month $month): Builder
     {
         return $query
+            ->selectRaw(
+                "id, starts_at, ends_at, GREATEST(LEAST(ends_at, DATE('{$month->end()->format('Y-m-d')}')) + 1 - GREATEST(starts_at, DATE('{$month->start()->format('Y-m-d')}')), 0) AS span"
+            )
             ->where(
                 fn ($q) => $q->whereMonth('starts_at', $month->month)
                     ->orWhereMonth('ends_at', $month->month)
